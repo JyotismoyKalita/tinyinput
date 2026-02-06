@@ -5,13 +5,31 @@
 
 A tiny, generic utility crate for reading and parsing user input from **stdin** in Rust.
 
-The `read` function is fully generic and relies on Rust’s type inference: the target type is inferred from the variable it is assigned to, removing the need for explicit parsing boilerplate.
+`read` is fully generic and relies on Rust’s compile-time type inference:
+the target type is inferred from the assignment context.
 
-`tinyinput` is designed to stay minimal and explicit:
-- No macros
-- No dependencies
-- No hidden panics
-- Caller controls error handling policy
+`tinyinput` is designed to stay minimal and explicit.
+
+## Why tinyinput?
+
+- Generic and type-safe
+- Uses Rust’s type inference — no explicit parsing
+- No macros, no dependencies
+- Caller-controlled error handling
+
+### Without tinyinput
+
+```rust
+let mut s = String::new();
+std::io::stdin().read_line(&mut s).unwrap();
+let x: i32 = s.trim().parse().unwrap();
+```
+
+### With tinyinput
+
+```rust
+let x: i32 = tinyinput::read("Enter number: ").unwrap();
+```
 
 It is ideal for small CLI tools, learning projects, and competitive programming utilities.
 
@@ -32,7 +50,7 @@ tinyinput = "0.1"
 
 ### Basic usage
 
-```rust,no_run
+```rust
 use tinyinput::read;
 
 fn main() {
@@ -43,7 +61,7 @@ fn main() {
 
 ### Using a default value on failure
 
-```rust,no_run
+```rust
 use tinyinput::read;
 
 fn main() {
@@ -54,7 +72,7 @@ fn main() {
 
 ### Custom error handling
 
-```rust,no_run
+```rust
 use tinyinput::read;
 
 fn main() {
@@ -105,3 +123,7 @@ pub enum ReadError {
 ## License
 
 MIT License
+
+## Author
+
+Jyotismoy Kalita
