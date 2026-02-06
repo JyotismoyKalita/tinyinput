@@ -2,6 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 ![Rust](https://img.shields.io/badge/rust-2021-orange.svg)
+[![Crates.io](https://img.shields.io/crates/v/tinyinput.svg)](https://crates.io/crates/tinyinput)
 
 A tiny, generic utility crate for reading and parsing user input from **stdin** in Rust.
 
