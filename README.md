@@ -46,6 +46,16 @@ tinyinput = "0.1"
 
 ---
 
+## Example
+
+Run the included example:
+
+```bash
+cargo run --example demo
+```
+
+---
+
 ## Usage
 
 ### Basic usage
