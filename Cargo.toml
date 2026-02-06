@@ -1,0 +1,11 @@
+[package]
+name = "tinyinput"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+description = "Tiny generic stdin input helper"
+repository = "https://github.com/JyotismoyKalita/tinyinput"
+readme = "README.md"
+
+[dependencies]
+
