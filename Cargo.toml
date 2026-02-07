@@ -6,7 +6,7 @@ license = "MIT"
 description = "A tiny, generic helper for reading and parsing user input from stdin using Rust’s type inference."
 repository = "https://github.com/JyotismoyKalita/tinyinput"
 readme = "README.md"
-keywords = ["stdin", "input", "parsing", "cli", "prompt", "readline"]
+keywords = ["stdin", "input", "parsing", "cli", "readline"]
 categories = ["command-line-utilities", "parsing"]
 
 [dependencies]
