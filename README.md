@@ -5,41 +5,54 @@
 [![Crates.io](https://img.shields.io/crates/v/tinyinput.svg)](https://crates.io/crates/tinyinput)
 [![Docs.rs](https://docs.rs/tinyinput/badge.svg)](https://docs.rs/tinyinput)
 
-A tiny, generic utility crate for reading and parsing user input from **stdin** in Rust.
+A tiny, dependency-free helper crate for **reading and parsing user input from `stdin` in Rust**.
 
-`read` is fully generic and relies on Rust’s compile-time type inference:
-the target type is inferred from the assignment context.
+`tinyinput` is designed for **small CLI tools, scripts, and learning projects** where you want to read user input without repeating the usual `stdin` + `parse` boilerplate.
 
-`tinyinput` is designed to stay minimal and explicit.
+---
 
 ## Why tinyinput?
 
-- Generic and type-safe
-- Uses Rust’s type inference — no explicit parsing
-- No macros, no dependencies
-- Caller-controlled error handling
+In Rust, taking user input typically involves:
 
-### Without tinyinput
+1. Reading a line from `stdin`
+2. Trimming whitespace
+3. Parsing the input into the desired type
+
+While explicit and correct, this pattern quickly becomes repetitive in small programs.
+
+`tinyinput` provides a **minimal and type-safe alternative** by leveraging **Rust’s compile-time type inference**.  
+The target type is inferred from the assignment context, so no explicit parsing logic is required at the call site.
+
+---
+
+## How to take user input in Rust
+
+### Standard Rust approach
 
 ```rust
-let mut s = String::new();
-std::io::stdin().read_line(&mut s).unwrap();
-let x: i32 = s.trim().parse().unwrap();
+use std::io;
+
+let mut input = String::new();
+io::stdin().read_line(&mut input).unwrap();
+let x: i32 = input.trim().parse().unwrap();
 ```
 
-### With tinyinput
+### Using `tinyinput`
 
 ```rust
-let x: i32 = tinyinput::read("Enter number: ").unwrap();
+use tinyinput::read;
+
+let x: i32 = read("Enter number: ").unwrap();
 ```
 
-It is ideal for small CLI tools, learning projects, and competitive programming utilities.
+This reduces boilerplate while remaining explicit, type-safe, and idiomatic.
 
 ---
 
 ## Installation
 
-Add this to your `Cargo.toml`:
+Add `tinyinput` to your `Cargo.toml`:
 
 ```toml
 [dependencies]
@@ -56,48 +69,21 @@ Run the included example:
 cargo run --example demo
 ```
 
----
-
-## Usage
-
-### Basic usage
-
 ```rust
 use tinyinput::read;
 
 fn main() {
-    let x: i32 = read("Enter integer: ").unwrap();
-    println!("You entered {x}");
-}
-```
+    let count: i32 = read("Enter count: ").unwrap();
+    let ratio: f64 = read("Enter ratio: ").unwrap_or_default();
+    let name: String = read("Enter name: ").unwrap();
 
-### Using a default value on failure
-
-```rust
-use tinyinput::read;
-
-fn main() {
-    let x: i32 = read("Enter integer: ").unwrap_or_default();
-    println!("Value: {x}");
-}
-```
-
-### Custom error handling
-
-```rust
-use tinyinput::read;
-
-fn main() {
-    match read::<f32>("Enter float: ") {
-        Ok(v) => println!("Value: {v}"),
-        Err(e) => eprintln!("Input error: {e:?}"),
-    }
+    println!("{count}, {ratio}, {name}");
 }
 ```
 
 ---
 
-## API
+## API Overview
 
 ### `read`
 
@@ -107,9 +93,19 @@ where
     T: FromStr,
 ```
 
-Reads a line from standard input, trims it, and parses it into `T`.
+- Prints the prompt (if non-empty)
+- Reads a single line from `stdin`
+- Trims whitespace
+- Parses the input into type `T`
+- Returns errors instead of panicking
 
-### Errors
+```rust
+let value: usize = read("Enter value: ").unwrap();
+```
+
+---
+
+## Error Handling
 
 ```rust
 pub enum ReadError {
@@ -118,17 +114,31 @@ pub enum ReadError {
 }
 ```
 
-- `Io` – failed to read from stdin
-- `Parse` – failed to parse input into the requested type
+- `Io` — reading from standard input failed
+- `Parse` — input could not be parsed into the requested type
 
 ---
 
 ## Design Philosophy
 
-- Minimal API surface
+- Tiny and focused
+- No macros
+- No global state
+- No hidden panics
+- No dependencies
 - Explicit error handling
-- No opinionated defaults
-- Caller decides how to handle failures
+- Leverages Rust’s type inference
+
+This crate is **not** a replacement for full command-line parsers like `clap`.
+
+---
+
+## When should you use tinyinput?
+
+- Learning Rust
+- Small CLI tools and scripts
+- Teaching stdin input handling
+- Reducing boilerplate in examples
 
 ---
 

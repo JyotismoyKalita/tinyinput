@@ -1,12 +1,12 @@
 [package]
 name = "tinyinput"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 license = "MIT"
 description = "A tiny, generic helper for reading and parsing user input from stdin using Rust’s type inference."
 repository = "https://github.com/JyotismoyKalita/tinyinput"
 readme = "README.md"
-keywords = ["stdin", "input", "parsing", "cli", "generic"]
+keywords = ["stdin", "input", "parsing", "cli", "prompt", "readline"]
 categories = ["command-line-utilities", "parsing"]
 
 [dependencies]
